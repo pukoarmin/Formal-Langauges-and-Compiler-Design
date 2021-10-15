@@ -20,28 +20,28 @@ class HashTable(object):
         self.size = 0
         self.buckets = [None] * self.capacity
 
-    def hash(self, key):
+    def hash(self, value):
         hash_sum = 0
-        # For each character in the key
-        for index, character in enumerate(key):
-            # Add (index + length of key) ^ (current char code)
-            hash_sum += (index + len(key)) ** ord(character)
+        # For each character in the value
+        for index, character in enumerate(value):
+            # Add (index + length of value) ^ (current char code)
+            hash_sum += (index + len(value)) ** ord(character)
             # Perform modulus to keep hash_sum in range [0, self.capacity - 1]
             hash_sum = hash_sum % self.capacity
         return hash_sum
 
-    def insert(self, key):
+    def insert(self, value):
         # 1. Increment size
         self.size += 1
-        # 2. Compute index of key
-        index = self.hash(key)
+        # 2. Compute index of value
+        index = self.hash(value)
         # Go to the node corresponding to the hash
         node = self.buckets[index]
 
         # 3. If bucket is empty:
         if node is None:
             # Create node, add it, return
-            self.buckets[index] = Node(key)
+            self.buckets[index] = Node(value)
             return
 
         # 4. Collision! Iterate to the end of the linked list at provided index
@@ -49,20 +49,20 @@ class HashTable(object):
         while node is not None:
             prev = node
             node = node.next
-        # Add a new node at the end of the list with provided key/value
-        prev.next = Node(key)
+        # Add a new node at the end of the list with provided value/value
+        prev.next = Node(value)
 
-    def get_id(self, key):
+    def get_index(self, value):
         # 1. Compute hash
-        index = self.hash(key)
+        index = self.hash(value)
         sub_pos = 0
         # 2. Go to first node in list at bucket
         node = self.buckets[index]
         # 3. Traverse the linked list at this node
-        while node is not None and node.key != key:
+        while node is not None and node.value != value:
             sub_pos += 1
             node = node.next
-        # 4. Now, node is the requested key/value pair or None
+        # 4. Now, node is the requested value/value pair or None
         if node is None:
             # Not found
             return None, None
@@ -70,37 +70,24 @@ class HashTable(object):
             # Found - return the data value
             return index, sub_pos
 
-    def find(self, key):
-        # 1. Compute hash
-        index = self.hash(key)
-        # 2. Go to first node in list at bucket
-        node = self.buckets[index]
-        # 3. Traverse the linked list at this node
-        while node is not None and node.key != key:
-            node = node.next
-        # 4. Now, node is the requested key/value pair or None
-        if node is None:
-            # Not found
-            return None
-        else:
-            # Found - return the data value
-            return node.value
+    def find(self, index):
+        return self.buckets[index]
 
-    def remove(self, key):
+    def remove(self, value):
         # 1. Compute hash
-        index = self.hash(key)
+        index = self.hash(value)
         node = self.buckets[index]
         prev = None
         # 2. Iterate to the requested node
-        while node is not None and node.key != key:
+        while node is not None and node.value != value:
             prev = node
             node = node.next
         # Now, node is either the requested node or none
         if node is None:
-            # 3. Key not found
+            # 3. value not found
             return None
         else:
-            # 4. The key was found.
+            # 4. The value was found.
             self.size -= 1
             result = node.value
             # Delete this element in linked list
