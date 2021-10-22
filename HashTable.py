@@ -7,10 +7,13 @@ class Node:
         self.next = None
 
     def __str__(self):
-        return "%s, %s" % (self.value, self.next is not None)
-
-    def __repr__(self):
-        return str(self)
+        string = ""
+        string += self.value
+        node = self.next
+        while node is not None:
+            string += ", " + node.value
+            node = node.next
+        return string
 
 
 # Hash table with separate chaining
@@ -42,15 +45,21 @@ class HashTable(object):
         if node is None:
             # Create node, add it, return
             self.buckets[index] = Node(value)
-            return
+            return index
 
         # 4. Collision! Iterate to the end of the linked list at provided index
         prev = node
+        sub_pos = 0
         while node is not None:
-            prev = node
-            node = node.next
-        # Add a new node at the end of the list with provided value/value
+            if node.value != value:
+                sub_pos += 1
+                prev = node
+                node = node.next
+            else:
+                return [index, sub_pos]
+        # Add a new node at the end of the list with provided value
         prev.next = Node(value)
+        return [index, sub_pos]
 
     def get_index(self, value):
         # 1. Compute hash

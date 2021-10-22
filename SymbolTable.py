@@ -6,7 +6,7 @@ class SymbolTable:
         self.table = HashTable()
 
     def add(self, value):
-        self.table.insert(value)
+        return self.table.insert(value)
 
     def get_symbol(self, index):
         node = self.table.find(index)
@@ -20,3 +20,12 @@ class SymbolTable:
         index, sub_index = self.table.get_index(value)
         return index, sub_index
 
+    def __str__(self):
+        string = "========================\n"
+        for element in self.table.buckets:
+            if element is not None:
+                string += str(self.get_index(element.value)[0])
+                string += " | "
+                string += str(element) + "\n"
+        string += "========================"
+        return string
