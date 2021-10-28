@@ -71,8 +71,18 @@ def tokenGenerator(line, separators):
 
 
 def isIdentifier(token):
-    return re.match(r'^[a-zA-Z]([a-zA-Z]|[0-9]|_){,7}$', token) is not None
+    return re.match(r'^[a-zA-Z]([a-zA-Z]|[0-9]|_){,256}$', token) is not None
 
 
 def isConstant(token):
     return re.match('^(0|[\+\-]?[1-9][0-9]*)$|^\'.\'$|^\".*\"$', token) is not None
+
+
+def isSystemToken(previous_token, token, lineNo):
+    if previous_token in reservedWords and token in reservedWords:
+        raise Exception('Use of reserved keyword: ' + token + ' at line ' + str(lineNo))
+
+    if token in separators + operators + reservedWords:
+        return True
+
+    return False

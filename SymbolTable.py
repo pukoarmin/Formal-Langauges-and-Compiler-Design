@@ -27,5 +27,5 @@ class SymbolTable:
                 string += str(self.get_index(element.value)[0])
                 string += " | "
                 string += str(element) + "\n"
-        string += "========================"
+        string += "========================\n"
         return string
