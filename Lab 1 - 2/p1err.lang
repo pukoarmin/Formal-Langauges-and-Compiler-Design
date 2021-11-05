@@ -1,0 +1,19 @@
+BEGIN
+    Integer for
+    Boolean thisWillBeAnOver256CharacterIdentifier_abcleoruglazithaksutoelsmachatuaortaajceoeyahfkbyarotjdgcoepquacyeorepwabcleoruglazithaksutoelsmachatuaortaajceoeyahfkbyarotjdgcoepquacyeorepwabcleoruglazithaksutoelsmachatuaortaajceoeyahfkbyarotjdgcoepquacyeorepwabcleoruglazithaksutoelsmachatuaortaajceoeyahfkbyarotjdgcoepquacyeorepwabcleoruglazithaksutoelsmachatuaortaajceoeyahfkbyarotjdgcoepquacyeorepwabcleoruglazithaksutoelsmachatuaortaajceoeyahfkbyarotjdgcoepquacyeorepw = True
+
+    print("Enter the value for n: ")
+    read(n)
+
+    if n < 2:
+        isPrime = False
+
+    for index = 4, index < sqrt(n/2) + 1, index = index + 1:
+        if n%i == 0:
+            isPrime = False
+
+    if isPrime == True:
+        print("N is prime")
+    else
+        print("N is not prime")
+END
