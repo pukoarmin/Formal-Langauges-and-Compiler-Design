@@ -76,8 +76,33 @@ class FiniteAutomata:
 
     def show_transitions_for(self, state):
         transitions = self.get_transitions_for(state)
-
         print('{ ' + ' '.join([' -> '.join([str(part) for part in trans]) for trans in transitions]) + ' }')
+
+    def isDFA(self):
+        heads = []
+        for transition in self.S:
+            if transition[0] in heads:
+                return False
+            heads.append(transition[0])
+        return True
+
+    def isAccepted(self, sequence):
+        if self.isDFA():
+            state = self.q0
+            for el in sequence:
+                for transition in self.S:
+                    if (state, el) == transition[0]:
+                        state = transition[1]
+                        break
+            if state in self.F:
+                print("--- Accepted")
+                return True
+            else:
+                print("--- Not accepted")
+                return False
+        else:
+            print("--- Not DFA!")
+            return False
 
     def __str__(self):
         return 'Q = { ' + ', '.join(self.Q) + ' }\n' \
