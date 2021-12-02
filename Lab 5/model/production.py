@@ -7,5 +7,6 @@ class Production:
         built_string = self.start + " -> "
         for rule_set in self.rules:
             for rule in rule_set:
-                built_string = built_string + rule
+                built_string = built_string + rule + " "
+        built_string += "\n"
         return built_string

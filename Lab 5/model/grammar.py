@@ -17,6 +17,7 @@ class Grammar:
                 if line_index <= 2:
                     tokens = line.split(" ")
                     for token in tokens:
+                        token = token.strip()
                         if line_index == 0:
                             self.non_terminals.append(token)
                         if line_index == 1:
@@ -26,9 +27,11 @@ class Grammar:
                 if line_index > 2:
                     tokens = line.split(" -> ")
                     rules = []
-                    for rule in tokens[1].split("\\| "):
-                        rules.append(rule.split(" "))
-                    self.productions.append(Production(tokens[0], rules))
+                    for rule in tokens[1].split(" | "):
+                        rules.append(rule.split())
+                    production = Production(tokens[0], rules)
+                    self.productions.append(production)
+
                 line_index += 1
         except Exception as e:
             print(e)
@@ -50,6 +53,19 @@ class Grammar:
                 productions_for_non_terminal.append(production)
         return productions_for_non_terminal
 
+    def CFG_check(self):
+        for production in self.productions:
+            for elem in production.rules:
+                for e in elem:
+                    if e == 'epsilon' or e in self.terminals or e in self.non_terminals:
+                        continue
+                    else:
+                        return False
+        return True
+
     def to_string(self):
+        production_string = ""
+        for production in self.productions:
+            production_string += str(production)
         return "G = ( " + str(self.non_terminals) + ", " + str(self.terminals) + ", " + \
-               str(self.productions) + str(self.starting_symbol) + " )"
+               str(production_string) + str(self.starting_symbol) + " )"
