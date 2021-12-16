@@ -1,0 +1,21 @@
+program
+BEGIN END term program cmpdstmt decllist declaration type type1 arraydecl stmt stmtlist simplstmt assignstmt expression iostmt structstmt ifstmt forstmt condition RELATION
+IDENTIFIER Boolean Integer String List < type1 > = + - * / ( ) [ ] , read print CONSTANT : { } if else for < <= == != >= > ; write
+program -> decllist cmpdstmt
+decllist -> declaration | declaration decllist
+declaration -> type IDENTIFIER
+type  -> type1 | arraydecl
+type1 -> Boolean | Integer | String
+arraydecl -> List < type1 >
+cmpdstmt -> BEGIN stmtlist END
+stmtlist -> stmt | stmt ; stmtlist
+stmt -> simplstmt | structstmt
+simplstmt -> assignstmt | iostmt
+assignstmt -> IDENTIFIER = expression
+expression -> expression + | - term | term
+iostmt -> read ( IDENTIFIER ) | write ( IDENTIFIER | CONSTANT )
+structstmt -> cmpdstmt | ifstmt | forstmt
+ifstmt -> if condition : stmt [ else : stmt ]
+forstmt -> for assignstmt condition assignstmt : stmt
+condition -> expression RELATION expression
+RELATION -> < | <= | == | != | >= | >
